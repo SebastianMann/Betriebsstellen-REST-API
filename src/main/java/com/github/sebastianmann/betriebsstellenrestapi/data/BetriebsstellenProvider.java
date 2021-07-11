@@ -1,5 +1,6 @@
-package com.github.sebastianmann.betriebsstellenrestapi;
+package com.github.sebastianmann.betriebsstellenrestapi.data;
 
+import com.github.sebastianmann.betriebsstellenrestapi.BetriebsstellenRestApiApplication;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;

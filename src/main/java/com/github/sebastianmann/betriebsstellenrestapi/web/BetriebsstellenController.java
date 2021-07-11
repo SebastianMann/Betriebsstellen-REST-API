@@ -1,5 +1,7 @@
-package com.github.sebastianmann.betriebsstellenrestapi;
+package com.github.sebastianmann.betriebsstellenrestapi.web;
 
+import com.github.sebastianmann.betriebsstellenrestapi.data.Betriebsstelle;
+import com.github.sebastianmann.betriebsstellenrestapi.data.BetriebsstellenProvider;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

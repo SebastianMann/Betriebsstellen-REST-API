@@ -1,4 +1,4 @@
-package com.github.sebastianmann.betriebsstellenrestapi;
+package com.github.sebastianmann.betriebsstellenrestapi.data;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
