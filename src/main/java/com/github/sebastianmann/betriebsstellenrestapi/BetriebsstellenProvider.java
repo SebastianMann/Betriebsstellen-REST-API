@@ -2,6 +2,7 @@ package com.github.sebastianmann.betriebsstellenrestapi;
 
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -14,9 +15,12 @@ public class BetriebsstellenProvider {
 
     private final Map<String, Betriebsstelle> betriebsstellen;
 
-    BetriebsstellenProvider() {
+    public BetriebsstellenProvider() {
         betriebsstellen = new HashMap<>();
+    }
 
+    @PostConstruct
+    public void populateMap() {
         InputStream file = BetriebsstellenRestApiApplication.class.getResourceAsStream("/betriebsstellen.csv");
 
         BufferedReader br = new BufferedReader(new InputStreamReader(file));
@@ -26,7 +30,7 @@ public class BetriebsstellenProvider {
             String[] columns = line.split(";");
 //            System.out.println(Arrays.toString(columns));
             betriebsstellen.put(
-                    columns[1].replaceAll(" ", "_").replaceAll("__", "_"),
+                    columns[1],//.replaceAll(" ", "_").replaceAll("__", "_"),
                     new Betriebsstelle(
                             columns[0],
                             columns[1],
@@ -43,7 +47,6 @@ public class BetriebsstellenProvider {
                     )
             );
         }
-
     }
 
     private Integer tryParseInt(String input) {
