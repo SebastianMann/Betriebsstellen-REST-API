@@ -1,8 +1,5 @@
 package com.github.sebastianmann.betriebsstellenrestapi;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.sebastianmann.betriebsstellenrestapi.data.Betriebsstelle;
 import com.github.sebastianmann.betriebsstellenrestapi.data.BetriebsstellenProvider;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,14 +64,11 @@ class BetriebsstellenRestApiApplicationTests {
     }
 
     @Test
-    void testRandomBetriebsstelle() throws JsonProcessingException {
-        Betriebsstelle betriebsstelle = betriebsstellenProvider.getRandomBetriebstelle();
+    void testSecurity() {
         assertThat(
                 this.restTemplate
-                        .withBasicAuth("user", "password")
-                        .getForObject("http://localhost:" + port + "/betriebsstelle/" + betriebsstelle.getRl100Code(), String.class)
-        ).isEqualTo(new ObjectMapper().writeValueAsString(betriebsstelle));
-
+                        .getForObject("http://localhost:" + port + "/betriebsstelle/aa  g", String.class)
+        ).contains("\"status\":401");
     }
 
 }
