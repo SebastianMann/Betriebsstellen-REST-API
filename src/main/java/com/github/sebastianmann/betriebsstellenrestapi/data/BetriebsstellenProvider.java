@@ -62,6 +62,12 @@ public class BetriebsstellenProvider {
         return output;
     }
 
+    public Betriebsstelle getRandomBetriebstelle() {
+        int id = (int) (Math.random() * betriebsstellen.size());
+        String key = (String) betriebsstellen.keySet().toArray()[id];
+        return getByID(key);
+    }
+
     public Betriebsstelle getByID(String id) {
 //        System.out.println(id.toUpperCase());
         return betriebsstellen.get(id.toUpperCase());
