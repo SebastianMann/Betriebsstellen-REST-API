@@ -3,7 +3,6 @@ package com.github.sebastianmann.betriebsstellenrestapi.data;
 import com.github.sebastianmann.betriebsstellenrestapi.BetriebsstellenRestApiApplication;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.PostConstruct;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -14,14 +13,16 @@ import java.util.Map;
 @Service
 public class BetriebsstellenProvider {
 
-    private final Map<String, Betriebsstelle> betriebsstellen;
+    private static final Map<String, Betriebsstelle> betriebsstellen = new HashMap<>();
 
-    public BetriebsstellenProvider() {
-        betriebsstellen = new HashMap<>();
+    static {
+        populateMap();
     }
 
-    @PostConstruct
-    public void populateMap() {
+    /**
+     * Populates the internal map with values from the betriebsstellen.csv file.
+     */
+    private static void populateMap() {
         InputStream file = BetriebsstellenRestApiApplication.class.getResourceAsStream("/betriebsstellen.csv");
 
         BufferedReader br = new BufferedReader(new InputStreamReader(file));
@@ -50,7 +51,14 @@ public class BetriebsstellenProvider {
         }
     }
 
-    private Integer tryParseInt(String input) {
+    /**
+     * Try to parse the provided String to an {@link Integer} object
+     *
+     * @param input the string to parse
+     * @return an {@link Integer} if the inputted string could be parsed <br>
+     * else returns null
+     */
+    private static Integer tryParseInt(String input) {
 //        System.out.println("Input: " + input);
         Integer output = null;
         if (input != null) {
@@ -62,13 +70,13 @@ public class BetriebsstellenProvider {
         return output;
     }
 
-    public Betriebsstelle getRandomBetriebstelle() {
-        int id = (int) (Math.random() * betriebsstellen.size());
-        String key = (String) betriebsstellen.keySet().toArray()[id];
-        return getByID(key);
-    }
-
-    public Betriebsstelle getByID(String id) {
+    /**
+     * Returns a {@link Betriebsstelle} from the internal map based on the provided id.
+     *
+     * @param id The ID of the desired {@link Betriebsstelle}
+     * @returns {@link Betriebsstelle}
+     */
+    public static Betriebsstelle getByID(String id) {
 //        System.out.println(id.toUpperCase());
         return betriebsstellen.get(id.toUpperCase());
     }

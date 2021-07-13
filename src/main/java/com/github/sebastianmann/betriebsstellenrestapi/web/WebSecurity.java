@@ -31,6 +31,9 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
         auth.userDetailsService(userDetailsService()).passwordEncoder(passwordEncoder());
     }
 
+    /**
+     * Mock user detail service for providing a single user.
+     */
     @Bean
     @Override
     public UserDetailsService userDetailsService() {
@@ -44,6 +47,11 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
         return new InMemoryUserDetailsManager(user);
     }
 
+    /**
+     * Provides a BCrypt password encoder.
+     *
+     * @return a {@link BCryptPasswordEncoder}.
+     */
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();

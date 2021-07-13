@@ -17,9 +17,17 @@ public class BetriebsstellenController {
 
     private final BetriebsstellenProvider betriebsstellenProvider;
 
+    /**
+     * @param abbreviation MUST be the RL100Code of the requested Betriebsstelle
+     * @return <b>200 OK</b> will be returned if the requested
+     * {@link com.github.sebastianmann.betriebsstellenrestapi.data.Betriebsstelle} was found. The response will contain
+     * the {@link com.github.sebastianmann.betriebsstellenrestapi.data.Betriebsstelle}-object.
+     * <br><b>404 Not Found</b> will be returned if the requested
+     * {@link com.github.sebastianmann.betriebsstellenrestapi.data.Betriebsstelle} was not found.
+     */
     @GetMapping("/{abbreviation}")
     public ResponseEntity<Betriebsstelle> getBetriebsstelle(@PathVariable String abbreviation) {
-        Betriebsstelle betriebsstelle = betriebsstellenProvider.getByID(abbreviation);
+        Betriebsstelle betriebsstelle = BetriebsstellenProvider.getByID(abbreviation);
 //        System.out.println(betriebsstelle);
 
         if (betriebsstelle == null) {
@@ -28,5 +36,6 @@ public class BetriebsstellenController {
 
         return new ResponseEntity<>(betriebsstelle, HttpStatus.OK);
     }
+
 
 }
